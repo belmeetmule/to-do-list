@@ -1,27 +1,23 @@
-import _ from 'lodash';
 import './style.css';
 
-const headerSection =document.querySelector('header');
-const mainSection =document.querySelector('main');
-const inputBox =document.querySelector('input');
-const tasksSection =document.querySelector('.tasks-container');
+const tasksSection = document.querySelector('.tasks-container');
 
 const tasksList = [
   {
-    task:'task 1',
-    completed:'false',
-    index:0
-},
-{
-  task:'task 2',
-  completed:'false',
-  index:1
-},
-{
-  task:'task 3',
-  completed:'false',
-  index:2
-},
+    task: 'task 1',
+    completed: 'false',
+    index: 0,
+  },
+  {
+    task: 'task 2',
+    completed: 'false',
+    index: 1,
+  },
+  {
+    task: 'task 3',
+    completed: 'false',
+    index: 2,
+  },
 ];
 
 function component(task) {
@@ -37,6 +33,6 @@ function component(task) {
   `;
   tasksSection.appendChild(taskElement);
 }
-tasksList.forEach(taskItem =>{
-  component(taskItem.task);  
-})
+tasksList.forEach((taskItem) => {
+  component(taskItem.task);
+});
