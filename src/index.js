@@ -1,21 +1,38 @@
-import _ from 'lodash';
-import printMe from './print.js';
 import './style.css';
 
-function component() {
-    const element = document.createElement('div');
-    const btn = document.createElement('button');
+const tasksSection = document.querySelector('.tasks-container');
 
-    //Lodash now imported using this script
-    element.innerHTML = _.join(['Hello', 'And what is that!'], ' ');
-    element.classList.add('hello');
+const tasksList = [
+  {
+    task: 'task 1',
+    completed: 'false',
+    index: 0,
+  },
+  {
+    task: 'task 2',
+    completed: 'false',
+    index: 1,
+  },
+  {
+    task: 'task 3',
+    completed: 'false',
+    index: 2,
+  },
+];
 
-    btn.innerHTML = 'Click me and check the console!';
-    btn.onclick = printMe;
-
-    element.appendChild(btn);
-  
-    return element;
-  }
-  
-  document.body.appendChild(component());
+function component(task) {
+  const taskElement = document.createElement('div');
+  taskElement.className = 'tasks';
+  taskElement.innerHTML = `
+  <div class="task-wrapper">
+  <input type="checkbox" name="completed" class="completed">
+  <span>${task} </span>
+  </div>
+  <i class="fas fa-ellipsis-v"></i>
+  <i class="fas fa-trash-alt"></i>
+  `;
+  tasksSection.appendChild(taskElement);
+}
+tasksList.forEach((taskItem) => {
+  component(taskItem.task);
+});

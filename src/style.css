@@ -1,7 +1,80 @@
-body {
-    background-color: bisque;
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
-.hello{
-    color: red;
+body {
+  background-color: #f7f8f8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+header,
+main {
+  background-color: #fff;
+  width: 50%;
+  box-shadow: 5px 10px 8px #d0d0d0;
+}
+
+header {
+  padding: 20px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  color: #595a5b;
+}
+
+.tasks,
+.input-box {
+  padding: 20px 20px;
+  border-top: 1px solid #d0d0d0;
+  width: 100%;
+}
+
+.tasks {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2rem;
+  color: #595a5b;
+}
+
+.task-wrapper {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.input-box {
+  outline: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+  padding: 15px 20px;
+  font-style: italic;
+  padding-left: 20px;
+  height: 50px;
+  font-size: 1.2rem;
+}
+
+button {
+  width: 100%;
+  padding: 20px 20px;
+  border: 1px solid #d0d0d0;
+  border-right: none;
+  border-left: none;
+  background-color: #f7f8f8;
+  font-size: 1.3rem;
+  color: #b2b4b5;
+}
+
+.fa-trash-alt {
+  display: none;
+}
+
+.sync-icon {
+  font-size: 1.2em;
+  color: rgb(112, 107, 106);
 }
