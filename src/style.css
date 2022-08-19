@@ -79,16 +79,18 @@ button {
   color: rgb(112, 107, 106);
 }
 
-.task-bg{
-    background-color: #fbf0e4;
-}
-.task-completed{
-    text-decoration: line-through;
-}
-.delete-task-icon{
-    display: block;
+.task-bg {
+  background-color: #fbf0e4;
 }
 
-.edit-task-icon{
-    display: none;
+.task-completed {
+  text-decoration: line-through;
+}
+
+.delete-task-icon {
+  display: block;
+}
+
+.edit-task-icon {
+  display: none;
 }
