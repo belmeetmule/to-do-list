@@ -10,10 +10,12 @@ class ToDoList {
   }
 
   static getLocalList = () => {
-    const temp = localStorage.getItem('my-to-do-list');
+    let temp = [];
+    temp = localStorage.getItem('my-to-do-list');
 
     if (temp) {
-      this.tasksList = JSON.parse(temp);
+      temp = JSON.parse(temp);
+      this.tasksList = temp;
     } else {
       localStorage.setItem('my-to-do-list', JSON.stringify(this.tasksList));
     }
@@ -25,50 +27,24 @@ class ToDoList {
     localStorage.setItem('my-to-do-list', JSON.stringify(data));
   }
 
-  static clearAll = () => {
-    // let temp = 0;
-    // temp = this.tasksList.filter((task) => task.completed === false);
-    const completedTasks = this.tasksList.filter((task) => task.completed === true);
-    const allTasks = document.querySelectorAll('.tasks');
-    if (completedTasks.length !== 0) {
-      for (let i = 0; i < allTasks.length; i += 1) {
-        if (this.tasksList[i].completed === true) {
-          document.querySelector('.tasks-container').removeChild(allTasks[i]);
-        }
-      }
-      this.tasksList = this.tasksList.filter((task) => task.completed === false);
-      ToDoList.updateLocalList(this.tasksList);
-    }
-    // re-arrange index after delete
-    if (this.tasksList.length !== 0) {
-      for (let i = 0; i < this.tasksList.length; i += 1) { this.tasksList[i].index = i; }
-    }
-    // update the local storage
-    ToDoList.updateLocalList(this.tasksList);
-  }
-
   static deleteTask = (target) => {
-    const temp = [];
     let desc = '';
     desc = target.parentElement.firstElementChild.lastElementChild.textContent;
-    this.tasksList = ToDoList.getLocalList();
-    console.log(`temp${temp}`);
-
-    this.tasksList.forEach((item, index) => {
+    let localData = ToDoList.getLocalList();
+    localData.forEach((item, index) => {
       if ((((item.description).trim().toString()) === (desc.trim().toString()))) {
-        this.tasksList.splice(index, 1);
-        console.log(`after delete ${temp}`);
-        ToDoList.updateLocalList(this.tasksList);
+       localData.splice(index, 1);
+        ToDoList.updateLocalList(localData);
       }
     });
 
     // re-arrange index after delete
-    this.tasksList = ToDoList.getLocalList();
-    if (this.tasksList.length !== 0) {
-      for (let i = 0; i < this.tasksList.length; i += 1) { this.tasksList[i].index = i; }
+    localData = ToDoList.getLocalList();
+    if (localData.length !== 0) {
+      for (let i = 0; i < localData.length; i += 1) { localData[i].index = i; }
     }
     // update the local storage
-    ToDoList.updateLocalList(this.tasksList);
+    ToDoList.updateLocalList(localData);
 
     // remove the item from the UI
     target.parentElement.remove();
@@ -81,10 +57,11 @@ class ToDoList {
     editField.value = todo.textContent;
     taskElement.replaceChild(editField, todo);
     taskElement.parentElement.classList.add('task-bg');
+   
     editField.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') {
         const tasks = document.querySelectorAll('.tasks');
-        const localData = ToDoList.getLocalList();
+        let localData = ToDoList.getLocalList();
         for (let i = 0; i < tasks.length; i += 1) {
           if (tasks[i].classList.contains('task-bg')) {
             localData[i].description = editField.value;
@@ -100,28 +77,35 @@ class ToDoList {
 
   static selectTasks = (cb) => {
     console.log(cb.nextElementSibling.textContent);
-    cb.parentElement.parentElement.classList.toggle('task-bg');
+    if(cb.checked){
+    cb.parentElement.parentElement.classList.add('task-bg');
     // cb.parentElement.lastElementChild.classList.toggle('task-completed');
-    cb.nextElementSibling.classList.toggle('task-completed');
-    cb.parentElement.parentElement.lastElementChild.classList.toggle('delete-task-icon');
-    cb.parentElement.parentElement.lastElementChild.previousElementSibling.classList.toggle('edit-task-icon');
+    cb.nextElementSibling.classList.add('task-completed');
+    cb.parentElement.parentElement.lastElementChild.classList.add('delete-task-icon');
+    cb.parentElement.parentElement.lastElementChild.previousElementSibling.classList.add('edit-task-icon');
+    }else{
+      cb.parentElement.parentElement.classList.remove('task-bg');
+      // cb.parentElement.lastElementChild.classList.toggle('task-completed');
+      cb.nextElementSibling.classList.remove('task-completed');
+      cb.parentElement.parentElement.lastElementChild.classList.remove('delete-task-icon');
+      cb.parentElement.parentElement.lastElementChild.previousElementSibling.classList.remove('edit-task-icon');
+
+    }
+     // milestone 3
+     let tempList = ToDoList.getLocalList();
+     for (let i = 0; i < tempList.length; i += 1) {
+       let cbTemp = cb.parentElement.lastElementChild.innerHTML;
+       if ((tempList[i].description.trim().toString()) === (cbTemp.trim().toString())) {
+         tempList[i].completed = !(tempList[i].completed);
+         ToDoList.updateLocalList(tempList);
+       }
+     }
 
     // now target the associated delete icon with this cb
     const delButton = cb.parentElement.parentElement.lastElementChild;
     delButton.addEventListener('click', () => {
-      tasksSection.removeChild(delButton.parentElement);
+      ToDoList.deleteTask(delButton);
     });
-    // then run the delete code
-
-    // milestone 3
-    const tempList = ToDoList.getLocalList();
-    for (let i = 0; i < tempList.length; i += 1) {
-      const cbTemp = cb.parentElement.lastElementChild.innerHTML;
-      if ((tempList[i].description.trim().toString()) === (cbTemp.trim().toString())) {
-        tempList[i].completed = !(tempList[i].completed);
-        ToDoList.updateLocalList(tempList);
-      }
-    }
   };
 
   addToDo = (task) => {
@@ -130,12 +114,14 @@ class ToDoList {
     taskElement.innerHTML = `
     <div class="task-wrapper">
     <input type="checkbox" name="completed" class="status">
-    <span>${task} </span>
+    <span> ${task} </span>
+    
     </div>
     <i class="fas fa-ellipsis-v"></i>
     <i class="fas fa-trash-alt"></i>
     `;
     tasksSection.appendChild(taskElement);
+    //<span contenteditable="true"> ${task} </span>
   }
 }
 
@@ -144,62 +130,31 @@ const myList = new ToDoList();
 const refresh = () => {
   myList.tasksList = ToDoList.getLocalList();
   myList.tasksList.forEach((task) => {
-    const taskElement = document.createElement('div');
-    taskElement.className = 'tasks';
-    taskElement.innerHTML = `
-  <div class="task-wrapper">
-  <input type="checkbox" name="completed" class="status">
-  <span>${task.description} </span>
-  </div>
-  <i class="fas fa-ellipsis-v"></i>
-  <i class="fas fa-trash-alt"></i>
-  `;
-    tasksSection.appendChild(taskElement);
+   
+    // build the list from local store
+    myList.addToDo(task.description)
+    
 
+    // check boxes
     const checkBoxes = document.querySelectorAll('.status');
-
-    checkBoxes.forEach((cb) => {
-      cb.addEventListener('click', (e) => {
-        console.log(e.target.nextElementSibling.textContent);
-        cb.parentElement.parentElement.classList.toggle('task-bg');
-        // cb.parentElement.lastElementChild.classList.toggle('task-completed');
-        cb.nextElementSibling.classList.toggle('task-completed');
-        cb.parentElement.parentElement.lastElementChild.classList.toggle('delete-task-icon');
-        cb.parentElement.parentElement.lastElementChild.previousElementSibling.classList.toggle('edit-task-icon');
-
-        for (let i = 0; i < myList.tasksList.length; i += 1) {
-          const cbTemp = cb.parentElement.lastElementChild.innerHTML;
-          if ((myList.tasksList[i].description.trim().toString()) === (cbTemp.trim().toString())) {
-            myList.tasksList[i].completed = !(myList.tasksList[i].completed);
-            ToDoList.updateLocalList(myList.tasksList);
-          }
-        }
-      });
-    });
+    checkBoxes.forEach((cb) => cb.addEventListener('change', () => {
+        ToDoList.selectTasks(cb);
+      }));
 
     // find the delete icons here
     const deleteIcons = document.querySelectorAll('.fa-trash-alt');
-    deleteIcons.forEach((di) => {
-      di.addEventListener('click', (e) => {
+    deleteIcons.forEach((di) => di.addEventListener('click', (e) => {
         ToDoList.deleteTask(e.target);
-      });
-    });
+        window.location.reload();
+      }));
   });
 };
 
-const clearUI = () => {
-  const allTasks = document.querySelectorAll('.tasks');
-  if (allTasks.length !== 0) {
-    for (let i = 0; i < allTasks.length; i += 1) {
-      document.querySelector('.tasks-container').removeChild(allTasks[i]);
-    }
-    refresh();
-  }
-};
 
 inputBox.addEventListener('keypress', (e) => {
   if (e.key === 'Enter' && inputBox.value) {
     myList.addToDo(inputBox.value);
+    
     const toDo = new Task(inputBox.value, false, myList.tasksList.length);
     if (myList.tasksList === null) {
       myList.tasksList = [];
@@ -216,29 +171,18 @@ inputBox.addEventListener('keypress', (e) => {
 
     // check boxes
     const checkBoxes = document.querySelectorAll('.status');
-    checkBoxes.forEach((cb) => {
-      cb.addEventListener('click', () => {
+    checkBoxes.forEach((cb) => cb.addEventListener('change', () => {
         ToDoList.selectTasks(cb);
-      });
-    });
+      }));
 
     // delete icons here
     const deleteIcons = document.querySelectorAll('.fa-trash-alt');
-    deleteIcons.forEach((di) => {
-      di.addEventListener('click', (e) => {
+    deleteIcons.forEach((di) => di.addEventListener('click', (e) => {
         ToDoList.deleteTask(e.target);
-      });
-    });
-
+      }));
+      window.location.reload();
     e.preventDefault();
   }
-});
-
-// clear all button
-const clearAllBtn = document.querySelector('button');
-clearAllBtn.addEventListener('click', () => {
-  ToDoList.clearAll();
-  clearUI();
 });
 
 window.onload = () => {
@@ -249,6 +193,7 @@ window.onload = () => {
   } else {
     localStorage.setItem('my-to-do-list', JSON.stringify(myList.tasksList));
   }
+  
   refresh();
 
   // edit tasks or icons
