@@ -36,15 +36,15 @@ header {
   color: #595a5b;
 }
 
-.edit-input{
-    outline: none;
-    border: none;
-    padding: 15px 20px;
-    font-style: italic;
-    padding-left: 20px;
-    height: 100%;
-    font-size: 1.2rem;
-    background-color: #fbf0e4;  
+.edit-input {
+  outline: none;
+  border: none;
+  padding: 15px 20px;
+  font-style: italic;
+  padding-left: 20px;
+  height: 100%;
+  font-size: 1.2rem;
+  background-color: #fbf0e4;
 }
 
 .tasks {
