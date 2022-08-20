@@ -32,13 +32,24 @@ header {
   padding: 20px 20px;
   border-top: 1px solid #d0d0d0;
   width: 100%;
+  font-size: 1.2rem;
+  color: #595a5b;
+}
+
+.edit-input{
+    outline: none;
+    border: none;
+    padding: 15px 20px;
+    font-style: italic;
+    padding-left: 20px;
+    height: 100%;
+    font-size: 1.2rem;
+    background-color: #fbf0e4;  
 }
 
 .tasks {
   display: flex;
   justify-content: space-between;
-  font-size: 1.2rem;
-  color: #595a5b;
 }
 
 .task-wrapper {
