@@ -1,5 +1,5 @@
 // milestone 3
-//This function updates status of tasks as they clicked 
+// This function updates status of tasks as they clicked
 
 export default function taskStatus(target) {
   const tempList = JSON.parse(localStorage.getItem('my-to-do-list'));
