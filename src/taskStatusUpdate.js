@@ -1,5 +1,6 @@
-// import { ToDoList } from './ToDoList.js';
 // milestone 3
+//This function updates status of tasks as they clicked 
+
 export default function taskStatus(target) {
   const tempList = JSON.parse(localStorage.getItem('my-to-do-list'));
   for (let i = 0; i < tempList.length; i += 1) {

@@ -50,29 +50,16 @@ class ToDoList {
     }
 
     static clearAllTasks = () => {
-      // let temp = 0;
-      // temp = this.tasksList.filter((task) => task.completed === false);
       const localData = ToDoList.getLocalList();
       const completedTasks = localData.filter((task) => task.completed === true);
       if (completedTasks.length !== 0) {
         const allTasks = document.querySelectorAll('.tasks');
         for (let i = 0; i < allTasks.length; i += 1) {
           if (localData[i].completed === true) {
-            // document.querySelector('.tasks-container').removeChild(allTasks[i]);
             ToDoList.deleteTask(allTasks[i].lastElementChild);
           }
         }
       }
-      /* //
-      this.tasksList = this.tasksList.filter((task) => task.completed === false);
-      ToDoList.updateLocalList(this.tasksList);
-
-      // re-arrange index after delete
-      if (this.tasksList.length !== 0) {
-        for (let i = 0; i < this.tasksList.length; i += 1) { this.tasksList[i].index = i; }
-      }
-      // update the local storage
-      ToDoList.updateLocalList(this.tasksList); */
     }
 
     static editTask = (taskElement, todo) => {
@@ -104,7 +91,6 @@ class ToDoList {
       console.log(cb.nextElementSibling.textContent);
       if (cb.checked) {
         cb.parentElement.parentElement.classList.add('task-bg');
-        // cb.parentElement.lastElementChild.classList.toggle('task-completed');
         cb.nextElementSibling.classList.add('task-completed');
         cb.parentElement.parentElement.lastElementChild.classList.add('delete-task-icon');
         cb.parentElement.parentElement.lastElementChild.previousElementSibling.classList.add('edit-task-icon');
@@ -113,7 +99,6 @@ class ToDoList {
         taskStatus(cb);
       } else {
         cb.parentElement.parentElement.classList.remove('task-bg');
-        // cb.parentElement.lastElementChild.classList.toggle('task-completed');
         cb.nextElementSibling.classList.remove('task-completed');
         cb.parentElement.parentElement.lastElementChild.classList.remove('delete-task-icon');
         cb.parentElement.parentElement.lastElementChild.previousElementSibling.classList.remove('edit-task-icon');
@@ -142,7 +127,6 @@ class ToDoList {
       <i class="fas fa-trash-alt"></i>
       `;
       tasksSection.appendChild(taskElement);
-      // <span contenteditable="true"> ${task} </span>
     }
 }
 
