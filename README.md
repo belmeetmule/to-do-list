@@ -11,7 +11,7 @@ This is a to-do-list app project. The application allows to add, edit, remove ta
 ## Live Demo
 
 - To visit the site live:
-[Live Demo Link](https://belmeetmule.github.io/to-do-list/)
+[Live Demo Link](https://belmeetmule.github.io/to-do-list/dist/)
 
 ## Built With
 
