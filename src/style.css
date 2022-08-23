@@ -14,7 +14,8 @@ body {
 header,
 main {
   background-color: #fff;
-  width: 50%;
+  width: 70%;
+  min-width: 375px;
   box-shadow: 5px 10px 8px #d0d0d0;
 }
 

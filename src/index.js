@@ -20,7 +20,6 @@ const refresh = () => {
     const deleteIcons = document.querySelectorAll('.fa-trash-alt');
     deleteIcons.forEach((di) => di.addEventListener('click', (e) => {
       ToDoList.deleteTask(e.target);
-      window.location.reload();
     }));
   });
 
@@ -58,7 +57,7 @@ inputBox.addEventListener('keypress', (e) => {
     deleteIcons.forEach((di) => di.addEventListener('click', (e) => {
       ToDoList.deleteTask(e.target);
     }));
-    window.location.reload();
+  
     e.preventDefault();
   }
 });
@@ -77,6 +76,7 @@ window.onload = () => {
   // edit tasks or icons
   const editIcons = document.querySelectorAll('.fa-ellipsis-v');
   editIcons.forEach((i) => i.addEventListener('click', () => {
+    
     ToDoList.editTask(i.previousElementSibling, i.previousElementSibling.lastElementChild);
   }));
 };
