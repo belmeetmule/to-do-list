@@ -78,9 +78,9 @@ class ToDoList {
             if (tasks[i].classList.contains('task-bg')) {
               localData[i].description = editField.value;
               ToDoList.updateLocalList(localData);
-              window.location.reload();
             }
           }
+          window.location.reload();
           editField.parentElement.parentElement.classList.remove('task-bg');
           taskElement.replaceChild(todo, editField);
           todo.textContent = editField.value;
