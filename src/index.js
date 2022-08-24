@@ -44,6 +44,7 @@ inputBox.addEventListener('keypress', (e) => {
     const editIcons = document.querySelectorAll('.fa-ellipsis-v');
     editIcons.forEach((i) => i.addEventListener('click', () => {
       ToDoList.editTask(i.previousElementSibling, i.previousElementSibling.lastElementChild);
+      window.location.reload();
     }));
 
     // check boxes
