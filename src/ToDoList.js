@@ -1,7 +1,16 @@
 import taskStatus from './taskStatusUpdate.js';
+import Task from './Task';
 
-const tasksSection = document.querySelector('.tasks-container');
+// eslint-disable-next-line no-unused-vars
+let tasksSection = document.querySelector('.tasks-container');
 const inputBox = document.querySelector('.input-box');
+// const list = document.getElementById('list');
+
+function setReference(listReference) {
+  tasksSection = listReference;
+}
+
+const tasksArray = [];
 
 class ToDoList {
   constructor() {
@@ -20,6 +29,10 @@ class ToDoList {
       }
 
       return this.tasksList;
+    }
+
+    setReference(listReference) {
+      this.list = listReference;
     }
 
     static updateLocalList = (data) => {
@@ -89,7 +102,6 @@ class ToDoList {
     }
 
     static selectTasks = (cb) => {
-      console.log(cb.nextElementSibling.textContent);
       if (cb.checked) {
         cb.parentElement.parentElement.classList.add('task-bg');
         cb.nextElementSibling.classList.add('task-completed');
@@ -116,6 +128,7 @@ class ToDoList {
     };
 
     addToDo = (task) => {
+      const tasksSection = document.querySelector('.tasks-container');
       const taskElement = document.createElement('div');
       taskElement.className = 'tasks';
       taskElement.innerHTML = `
@@ -127,8 +140,35 @@ class ToDoList {
       <i class="fas fa-ellipsis-v"></i>
       <i class="fas fa-trash-alt"></i>
       `;
+
+      const newTask = new Task(task, false, tasksArray);
+      tasksArray.push(newTask);
       tasksSection.appendChild(taskElement);
+    }
+
+    static removeTask = (target) => {
+      let desc = '';
+      desc = target.parentElement.firstElementChild.lastElementChild.textContent;
+      // const localData = ToDoList.getLocalList();
+
+      tasksArray.forEach((item, index) => {
+        if ((((item.description).trim().toString()) === (desc.trim().toString()))) {
+          tasksArray.splice(index, 1);
+          // ToDoList.updateLocalList(localData);
+        }
+      });
+
+      // re-arrange index after delete
+      // localData = ToDoList.getLocalList();
+      if (tasksArray.length !== 0) {
+        for (let i = 0; i < tasksArray.length; i += 1) { tasksArray[i].index = i; }
+      }
+      // update the local storage
+      // ToDoList.updateLocalList(localData);
+
+      // remove the item from the UI
+      target.parentElement.remove();
     }
 }
 
-export { ToDoList, inputBox };
+export { ToDoList, inputBox, setReference };
