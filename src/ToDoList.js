@@ -1,15 +1,16 @@
 import taskStatus from './taskStatusUpdate.js';
-import Task from "./Task";
+import Task from './Task';
 
-const tasksSection = document.querySelector('.tasks-container');
+// eslint-disable-next-line no-unused-vars
+let tasksSection = document.querySelector('.tasks-container');
 const inputBox = document.querySelector('.input-box');
-let list = document.getElementById('list');
+// const list = document.getElementById('list');
 
 function setReference(listReference) {
   tasksSection = listReference;
 }
 
-let tasksArray = [];
+const tasksArray = [];
 
 class ToDoList {
   constructor() {
@@ -31,7 +32,7 @@ class ToDoList {
     }
 
     setReference(listReference) {
-      list = listReference;
+      this.list = listReference;
     }
 
     static updateLocalList = (data) => {
@@ -42,18 +43,12 @@ class ToDoList {
       let desc = '';
       desc = target.parentElement.firstElementChild.lastElementChild.textContent;
       let localData = ToDoList.getLocalList();
-      /* localData.forEach((item, index) => {
+      localData.forEach((item, index) => {
         if ((((item.description).trim().toString()) === (desc.trim().toString()))) {
           localData.splice(index, 1);
           ToDoList.updateLocalList(localData);
         }
-      }); */
-      for(let index=0 ; index < localData.length;i++){
-        if ((((item.description).trim().toString()) === (desc.trim().toString()))) {
-          localData.splice(index, 1);
-          ToDoList.updateLocalList(localData);
-        }
-      }
+      });
 
       // re-arrange index after delete
       localData = ToDoList.getLocalList();
@@ -107,7 +102,6 @@ class ToDoList {
     }
 
     static selectTasks = (cb) => {
-      console.log(cb.nextElementSibling.textContent);
       if (cb.checked) {
         cb.parentElement.parentElement.classList.add('task-bg');
         cb.nextElementSibling.classList.add('task-completed');
@@ -132,7 +126,7 @@ class ToDoList {
         ToDoList.deleteTask(delButton);
       });
     };
- 
+
     addToDo = (task) => {
       const tasksSection = document.querySelector('.tasks-container');
       const taskElement = document.createElement('div');
@@ -146,8 +140,8 @@ class ToDoList {
       <i class="fas fa-ellipsis-v"></i>
       <i class="fas fa-trash-alt"></i>
       `;
-        
-      let newTask = new Task(task,false,tasksArray);
+
+      const newTask = new Task(task, false, tasksArray);
       tasksArray.push(newTask);
       tasksSection.appendChild(taskElement);
     }
@@ -155,22 +149,22 @@ class ToDoList {
     static removeTask = (target) => {
       let desc = '';
       desc = target.parentElement.firstElementChild.lastElementChild.textContent;
-      let localData = ToDoList.getLocalList();
+      // const localData = ToDoList.getLocalList();
 
       tasksArray.forEach((item, index) => {
         if ((((item.description).trim().toString()) === (desc.trim().toString()))) {
           tasksArray.splice(index, 1);
-          //ToDoList.updateLocalList(localData);
+          // ToDoList.updateLocalList(localData);
         }
       });
-      
+
       // re-arrange index after delete
-      //localData = ToDoList.getLocalList();
+      // localData = ToDoList.getLocalList();
       if (tasksArray.length !== 0) {
         for (let i = 0; i < tasksArray.length; i += 1) { tasksArray[i].index = i; }
       }
       // update the local storage
-      //ToDoList.updateLocalList(localData);
+      // ToDoList.updateLocalList(localData);
 
       // remove the item from the UI
       target.parentElement.remove();

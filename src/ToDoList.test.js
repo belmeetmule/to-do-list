@@ -30,11 +30,9 @@ describe('Test Add', () => {
         let t = new Task('test-'+1, false, index);
       } */
       const description = 'test';
-
-      myList.addToDo(description);
-      myList.addToDo(description);
-      myList.addToDo(description);
-
+      for (let i = 0; i < 3; i += 1)
+      myList.addToDo(description + '-' + i + 1);
+     
       const deleteIcons = document.querySelectorAll('.fa-trash-alt');
 
       deleteIcons[0].click();
