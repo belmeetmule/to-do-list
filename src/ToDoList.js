@@ -1,7 +1,15 @@
 import taskStatus from './taskStatusUpdate.js';
+import Task from "./Task";
 
 const tasksSection = document.querySelector('.tasks-container');
 const inputBox = document.querySelector('.input-box');
+let list = document.getElementById('list');
+
+function setReference(listReference) {
+  tasksSection = listReference;
+}
+
+let tasksArray = [];
 
 class ToDoList {
   constructor() {
@@ -22,6 +30,10 @@ class ToDoList {
       return this.tasksList;
     }
 
+    setReference(listReference) {
+      list = listReference;
+    }
+
     static updateLocalList = (data) => {
       localStorage.setItem('my-to-do-list', JSON.stringify(data));
     }
@@ -30,12 +42,18 @@ class ToDoList {
       let desc = '';
       desc = target.parentElement.firstElementChild.lastElementChild.textContent;
       let localData = ToDoList.getLocalList();
-      localData.forEach((item, index) => {
+      /* localData.forEach((item, index) => {
         if ((((item.description).trim().toString()) === (desc.trim().toString()))) {
           localData.splice(index, 1);
           ToDoList.updateLocalList(localData);
         }
-      });
+      }); */
+      for(let index=0 ; index < localData.length;i++){
+        if ((((item.description).trim().toString()) === (desc.trim().toString()))) {
+          localData.splice(index, 1);
+          ToDoList.updateLocalList(localData);
+        }
+      }
 
       // re-arrange index after delete
       localData = ToDoList.getLocalList();
@@ -114,8 +132,9 @@ class ToDoList {
         ToDoList.deleteTask(delButton);
       });
     };
-
+ 
     addToDo = (task) => {
+      const tasksSection = document.querySelector('.tasks-container');
       const taskElement = document.createElement('div');
       taskElement.className = 'tasks';
       taskElement.innerHTML = `
@@ -127,8 +146,35 @@ class ToDoList {
       <i class="fas fa-ellipsis-v"></i>
       <i class="fas fa-trash-alt"></i>
       `;
+        
+      let newTask = new Task(task,false,tasksArray);
+      tasksArray.push(newTask);
       tasksSection.appendChild(taskElement);
+    }
+
+    static removeTask = (target) => {
+      let desc = '';
+      desc = target.parentElement.firstElementChild.lastElementChild.textContent;
+      let localData = ToDoList.getLocalList();
+
+      tasksArray.forEach((item, index) => {
+        if ((((item.description).trim().toString()) === (desc.trim().toString()))) {
+          tasksArray.splice(index, 1);
+          //ToDoList.updateLocalList(localData);
+        }
+      });
+      
+      // re-arrange index after delete
+      //localData = ToDoList.getLocalList();
+      if (tasksArray.length !== 0) {
+        for (let i = 0; i < tasksArray.length; i += 1) { tasksArray[i].index = i; }
+      }
+      // update the local storage
+      //ToDoList.updateLocalList(localData);
+
+      // remove the item from the UI
+      target.parentElement.remove();
     }
 }
 
-export { ToDoList, inputBox };
+export { ToDoList, inputBox, setReference };
