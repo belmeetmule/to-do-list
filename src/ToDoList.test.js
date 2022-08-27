@@ -82,11 +82,10 @@ describe('Test Add', () => {
       let output = ToDoList.editToDo(param1, param2 , 'Gym Workout', 1);
       expect(output[1].description).toStrictEqual(expected);
     
-    })
-
+           // expect(JSON.parse(localStorage.getItem('ToDoItems'))[0].description).toBe('test'); 
+    });
 })
 
-// test to update task status as the user clicks on checkboxes
 describe('update status', () => {
     test('when user clicks on a checkbox task status should change to completed', () => {
       
@@ -138,12 +137,8 @@ describe('update status', () => {
   
       })
 }
-<<<<<<< HEAD
 )
 
-=======
-) 
-
 // test to clear selected tasks
 describe('Clear all selected tasks', () => { 
     test('if it clears all the selected tasks', () => {
@@ -183,45 +178,37 @@ describe('Clear all selected tasks', () => {
 
     })
 }
-) 
+)
 
-// test to clear selected tasks
-describe('Clear all selected tasks', () => { 
-    test('if it clears all the selected tasks', () => {
-    
-      document.body.innerHTML = `<div class="tasks-container" id="tasks-list"> </div>
-      '<button type="button"> Clear all completed</button>`;
-      let task = document.getElementById('tasks-list');
-      let myList = new ToDoList();
-      myList.setReference(task);
-      
-      let tasksArray=[
-        {
-            description:'task 1',
-            completed : true,
-            index : 0
-        },
-        {
-            description:'task 2',
-            completed : false,
-            index : 1
-        },
-        {
-            description:'task 3',
-            completed : true,
-            index : 2
-        }
-      ]
-      myList.addToDo(tasksArray[0].description);
-      myList.addToDo(tasksArray[1].description);
-      myList.addToDo(tasksArray[2].description);
-      const allTasks = document.querySelectorAll('.tasks');
-      const clearTasks = document.querySelector('button');
-      clearTasks.click();
-      let output = (ToDoList.removeSelectedTasks(tasksArray, allTasks));
-
-      expect(output.length).toBe(1);
-
-    })
-}
-) 
+//test task edit function
+describe('Test Edit', () => {
+  test('Does editing works', () => {
+    document.body.innerHTML = '<div class="tasks-container" id="tasks-list"> </div>';
+    let task = document.getElementById('tasks-list');
+    let myList = new ToDoList();
+    myList.setReference(task);
+    let tasksArray=[
+      {
+          description:'task 1',
+          completed : true,
+          index : 0
+      },
+      {
+          description:'task 2',
+          completed : false,
+          index : 1
+      },
+      {
+          description:'task 3',
+          completed : true,
+          index : 2
+      }
+    ];      const expected = [1].description= 'Gym Workout';      myList.addToDo(tasksArray[0].description);
+    myList.addToDo(tasksArray[1].description);
+    myList.addToDo(tasksArray[2].description);
+    const allTasks = document.querySelectorAll('.tasks');      const editIcons = document.querySelectorAll('.fa-ellipsis-v');
+    editIcons[1].click();
+    const param1 = editIcons[1].previousElementSibling;
+    const param2 = editIcons[1].previousElementSibling.lastElementChild;
+    let output = ToDoList.editToDo(param1, param2 , 'Gym Workout', 1);
+    expect(output[1].description).toStrictEqual(expected);    })})

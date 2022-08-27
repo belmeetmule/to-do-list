@@ -76,12 +76,9 @@ class ToDoList {
     }
 
     static removeSelectedTasks = (myTasksList, allTasks) => {
-      console.log('recieved tasks' + allTasks.length);
-      console.log('my tasks length' + myTasksList.length);
-       
-      let completedTasks = myTasksList.filter((task) => task.completed === true);
+      const completedTasks = myTasksList.filter((task) => task.completed === true);
       if (completedTasks.length !== 0) {
-       // const allTasks = document.querySelectorAll('.tasks');
+        // const allTasks = document.querySelectorAll('.tasks');
         for (let i = 0; i < allTasks.length; i += 1) {
           if (myTasksList[i].completed === true) {
             ToDoList.removeTask(allTasks[i].lastElementChild);
@@ -89,7 +86,7 @@ class ToDoList {
         }
       }
 
-      return myTasksList.filter((task) => task.completed === false);;
+      return myTasksList.filter((task) => task.completed === false);
     }
 
     static editTask = (taskElement, todo) => {
@@ -117,7 +114,6 @@ class ToDoList {
         }
       });
     }
-
 
     static selectTasks = (cb) => {
       if (cb.checked) {
@@ -195,13 +191,12 @@ class ToDoList {
       editField.value = todo.textContent;
       taskElement.replaceChild(editField, todo);
       taskElement.parentElement.classList.add('task-bg');
-      console.log('i was here');
       tasksArray[index].description = newToDo;
 
       editField.parentElement.parentElement.classList.remove('task-bg');
       taskElement.replaceChild(todo, editField);
       todo.textContent = newToDo;
-  
+
       return tasksArray;
     }
 }
