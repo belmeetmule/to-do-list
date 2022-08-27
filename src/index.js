@@ -65,7 +65,6 @@ inputBox.addEventListener('keypress', (e) => {
 
 window.onload = () => {
   const temp = localStorage.getItem('my-to-do-list');
-  console.log(temp);
   if (temp) {
     myList.tasksList = JSON.parse(temp);
   } else {

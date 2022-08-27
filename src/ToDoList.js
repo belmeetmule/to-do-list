@@ -1,5 +1,5 @@
 import taskStatus from './taskStatusUpdate.js';
-import Task from './Task';
+import Task from './Task.js';
 
 // eslint-disable-next-line no-unused-vars
 let tasksSection = document.querySelector('.tasks-container');
@@ -73,6 +73,20 @@ class ToDoList {
           }
         }
       }
+    }
+
+    static removeSelectedTasks = (myTasksList, allTasks) => {
+      const completedTasks = myTasksList.filter((task) => task.completed === true);
+      if (completedTasks.length !== 0) {
+        // const allTasks = document.querySelectorAll('.tasks');
+        for (let i = 0; i < allTasks.length; i += 1) {
+          if (myTasksList[i].completed === true) {
+            ToDoList.removeTask(allTasks[i].lastElementChild);
+          }
+        }
+      }
+
+      return myTasksList.filter((task) => task.completed === false);
     }
 
     static editTask = (taskElement, todo) => {
@@ -168,6 +182,22 @@ class ToDoList {
 
       // remove the item from the UI
       target.parentElement.remove();
+    }
+
+    static editToDo = (taskElement, todo, newToDo, index) => {
+      const editField = document.createElement('input');
+      editField.type = Text;
+      editField.className = 'edit-input';
+      editField.value = todo.textContent;
+      taskElement.replaceChild(editField, todo);
+      taskElement.parentElement.classList.add('task-bg');
+      tasksArray[index].description = newToDo;
+
+      editField.parentElement.parentElement.classList.remove('task-bg');
+      taskElement.replaceChild(todo, editField);
+      todo.textContent = newToDo;
+
+      return tasksArray;
     }
 }
 
