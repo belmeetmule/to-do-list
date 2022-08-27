@@ -1,5 +1,5 @@
 import taskStatus from './taskStatusUpdate.js';
-import Task from './Task';
+import Task from './Task.js';
 
 // eslint-disable-next-line no-unused-vars
 let tasksSection = document.querySelector('.tasks-container');

@@ -17,7 +17,6 @@ export default function taskStatus(target) {
 }
 
 export function changeTaskStatus(target, tasksList) {
-  
   for (let i = 0; i < tasksList.length; i += 1) {
     const cbTemp = target.parentElement.lastElementChild.innerHTML;
     if ((tasksList[i].description.trim().toString()) === (cbTemp.trim().toString())) {
@@ -26,7 +25,6 @@ export function changeTaskStatus(target, tasksList) {
       } else {
         tasksList[i].completed = false;
       }
-      
     }
   }
 
